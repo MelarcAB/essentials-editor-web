@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.mobile-nav-button:focus + .mobile-nav,
+.mobile-nav-button.active + .mobile-nav {
+    display: block !important;
+}
+.dropdown {
+    position: relative;
+    z-index: 1000;  /* Un valor alto para asegurar que esté por encima de otros elementos */
+}
+.dropdown-content {
+    position: absolute;
+    z-index: 1001;  /* Asegurarse de que esté por encima incluso del toggle */
+    /* El resto de tus estilos... */
+}
