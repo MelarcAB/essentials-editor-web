@@ -15,11 +15,13 @@ class Ability
     //constructor
     public function __construct(
         $Name = "",
-        $Description = ""
+        $Description = "",
+        $id = ""
     ) {
         $this->Name = $Name;
         $this->Description = $Description;
         $this->path = env('PROJECT_PATH', '') . "/PBS/Abilities.txt";
+        $this->id = $id ;
     }
 
     //function GetAbilities
@@ -60,7 +62,9 @@ class Ability
             // Construir el objeto Ability
             $ability = new Ability(
                 $attributes['Name'] ?? null,
-                $attributes['Description'] ?? null
+                $attributes['Description'] ?? null,
+                $idName,
+
             );
     
             $abilities[] = $ability;

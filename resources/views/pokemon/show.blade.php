@@ -73,7 +73,7 @@
                                     class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
                                     <option value="">-- Select --</option>
                                     @foreach ($abilities as $ability)
-                                        <option value="{{ $ability->Name }}"
+                                        <option value="{{ $ability->id}}"
                                             {{ isset($abilitiesOfPokemon[$i]) && strtoupper(str_replace(' ','',$abilitiesOfPokemon[$i])) == strtoupper(str_replace(' ','',$ability->Name)) ? 'selected' : '' }}>
                                             {{ $ability->Name }}
                                         </option>
