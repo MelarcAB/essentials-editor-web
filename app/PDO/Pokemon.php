@@ -1,7 +1,9 @@
 <?php
 
 namespace App\PDO;
+
 use Illuminate\Support\Facades\File;
+use App\PDO\Move;
 
 class Pokemon
 {
@@ -174,8 +176,9 @@ class Pokemon
     }
 
 
-    
-    public function addPokemon($path) {
+
+    public function addPokemon($path)
+    {
         $fileContent = "\n#-------------------------------\n";
         $fileContent .= "[$this->Name]\n";
         $fileContent .= "Name = $this->Name\n";
@@ -204,43 +207,71 @@ class Pokemon
         $fileContent .= "Generation = $this->Generation\n";
         $fileContent .= "Evolutions = $this->Evolutions\n";
         $fileContent .= "#-------------------------------\n";
-        
+
         // Append to the file
         File::append($path, $fileContent);
     }
 
-    public function getPokemonName($parsed = false){
-        if (!$parsed) return $this ->Name;
-        $name = $this ->Name;
-        
+    public function getPokemonName($parsed = false)
+    {
+        if (!$parsed)
+            return $this->Name;
+        $name = $this->Name;
+
         //remove ' ','-',"."
-        $name =str_replace([' ','-',".","♀","♂"],"" , $name);
+        $name = str_replace([' ', '-', ".", "♀", "♂"], "", $name);
         //replace ♂ with mA and ♀ with fA
-        $name = str_replace ("♂","mA", $name);
-        $name = str_replace ("♀","fE", $name);
+        $name = str_replace("♂", "mA", $name);
+        $name = str_replace("♀", "fE", $name);
         return $name;
     }
 
-    public function getSprites(){
-       return [
+    public function getSprites()
+    {
+        return [
             "back" => "/Graphics/Pokemon/Back/" . $this->getPokemonName(true) . ".png",
             "front" => "/Graphics/Pokemon/Front/" . $this->getPokemonName(true) . ".png",
             "footprint" => "/Graphics/Pokemon/Footprints/" . $this->getPokemonName(true) . ".png",
             "icons" => "/Graphics/Pokemon/Icons/" . $this->getPokemonName(true) . ".png",
             "back_shiny" => "/Graphics/Pokemon/Back shiny/" . $this->getPokemonName(true) . ".png",
             "front_shiny" => "/Graphics/Pokemon/Front shiny/" . $this->getPokemonName(true) . ".png",
-            "follower" => "/Graphics/Characters/Followers/". $this->getPokemonName(true) .  ".png",
+            "follower" => "/Graphics/Characters/Followers/" . $this->getPokemonName(true) . ".png",
         ];
     }
 
-    public function searchPokemon($name) {
+    public function searchPokemon($name)
+    {
         $pokemons = $this->getPokemonList();
         foreach ($pokemons as $pokemon) {
-           if (trim(strtoupper($pokemon->getPokemonName(true))) == $name) {
-            return $pokemon;
-           }
+            if (trim(strtoupper($pokemon->getPokemonName(true))) == $name) {
+                return $pokemon;
+            }
         }
         return false;
     }
+
+    public function getMoves()
+    {
+        $moves = [];
+        $movesData = explode(",", $this->Moves);
+        
+        // Iterar sobre los elementos de la matriz de dos en dos
+        for ($i = 0; $i < count($movesData); $i += 2) {
+            $level = $movesData[$i];
+            $moveName = $movesData[$i + 1];
     
+            $move_obj = new Move();
+            $move = $move_obj->getMove($moveName);
+            if ($move) {
+                $aux = [
+                    "level" => $level,
+                    "move" => $move,
+                ];
+                $moves[] = $aux;
+            }
+        }
+    
+        return $moves;
+    }
+
 }

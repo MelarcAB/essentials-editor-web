@@ -55,7 +55,6 @@
                         @endforeach
                     </div>
                 </div>
-
                 <!-- Abilities -->
                 <div class="bg-blue-100 p-4 rounded-lg shadow-md">
                     <h2 class="text-xl md:text-2xl font-bold mb-6 text-blue-800">Abilities</h2>
@@ -63,16 +62,23 @@
                     <!-- Regular Abilities -->
                     <div class="mb-6 grid grid-cols-2 gap-4">
                         @php
-                            $abilities = explode(',', $pokemon->Abilities);
+                            $abilitiesOfPokemon = explode(',', $pokemon->Abilities);
                         @endphp
                         @for ($i = 0; $i < 4; $i++)
                             <div>
                                 <label for="ability{{ $i + 1 }}"
                                     class="block text-base font-semibold text-gray-700 mb-1">Ability
                                     {{ $i + 1 }}:</label>
-                                <input type="text" id="ability{{ $i + 1 }}" name="abilities[]"
-                                    value="{{ $abilities[$i] ?? '' }}" placeholder="e.g. KEENEYE"
+                                <select id="ability{{ $i + 1 }}" name="abilities[]"
                                     class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">-- Select --</option>
+                                    @foreach ($abilities as $ability)
+                                        <option value="{{ $ability->Name }}"
+                                            {{ isset($abilitiesOfPokemon[$i]) && strtoupper($abilitiesOfPokemon[$i]) == strtoupper($ability->Name) ? 'selected' : '' }}>
+                                            {{ $ability->Name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         @endfor
                     </div>
@@ -80,16 +86,23 @@
                     <!-- Hidden Abilities -->
                     <div class="mb-6 grid grid-cols-2 gap-4">
                         @php
-                            $hiddenAbilities = explode(',', $pokemon->HiddenAbilities);
+                            $hiddenAbilitiesOfPokemon = explode(',', $pokemon->HiddenAbilities);
                         @endphp
                         @for ($i = 0; $i < 2; $i++)
                             <div>
                                 <label for="hidden_ability{{ $i + 1 }}"
                                     class="block text-base font-semibold text-gray-700 mb-1">Hidden Ability
                                     {{ $i + 1 }}:</label>
-                                <input type="text" id="hidden_ability{{ $i + 1 }}" name="hidden_abilities[]"
-                                    value="{{ $hiddenAbilities[$i] ?? '' }}" placeholder="e.g. BIGPECKS"
+                                <select id="hidden_ability{{ $i + 1 }}" name="hidden_abilities[]"
                                     class="w-full px-3 py-2 border rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+                                    <option value="">-- Select --</option>
+                                    @foreach ($abilities as $ability)
+                                        <option value="{{ $ability->Name }}"
+                                            {{ isset($hiddenAbilitiesOfPokemon[$i]) && strtoupper($hiddenAbilitiesOfPokemon[$i]) == strtoupper($ability->Name) ? 'selected' : '' }}>
+                                            {{ $ability->Name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                         @endfor
                     </div>
@@ -201,6 +214,32 @@
 
 
             </div>
+            <div class="bg-blue-100 p-4 rounded-lg shadow-md mt-6">
+                <h2 class="text-xl md:text-2xl font-bold mb-6 text-blue-800">Moves</h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full table-fixed">
+                        <thead>
+                            <tr class="text-left bg-blue-200">
+                                <th class="px-4 py-2 w-1/6">Level</th>
+                                <th class="px-4 py-2 w-5/6">Move</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @php
+                                $moves = $pokemon->getMoves();
+                            @endphp
+                            @foreach ($moves as $move)
+                                <tr>
+                                    <td class="px-4 py-2 border">{{ $move['level'] }}</td>
+                                    <td class="px-4 py-2 border">{{ $move['move']->Name}}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
 
 
         </div>

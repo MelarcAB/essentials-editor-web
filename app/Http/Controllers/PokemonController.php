@@ -5,6 +5,7 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Http\Request;
 use App\PDO\Pokemon;
+use App\PDO\Ability;
 
 class PokemonController extends Controller
 {
@@ -31,9 +32,11 @@ class PokemonController extends Controller
     function show($name) {
         $name = strtoupper($name);
         $pokemon_obj = new Pokemon();
+        $ability_obj = new Ability();
+        $abilities = $ability_obj->getAbilities();
         $pokemon = $pokemon_obj->searchPokemon($name);
         if (!$pokemon) return;
-        return view('pokemon.show', compact('pokemon'));
+        return view('pokemon.show', compact('pokemon','abilities'));
     }
     
 }
