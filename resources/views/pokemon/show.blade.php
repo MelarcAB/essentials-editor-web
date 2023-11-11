@@ -74,7 +74,7 @@
                                     <option value="">-- Select --</option>
                                     @foreach ($abilities as $ability)
                                         <option value="{{ $ability->Name }}"
-                                            {{ isset($abilitiesOfPokemon[$i]) && strtoupper($abilitiesOfPokemon[$i]) == strtoupper($ability->Name) ? 'selected' : '' }}>
+                                            {{ isset($abilitiesOfPokemon[$i]) && strtoupper(str_replace(' ','',$abilitiesOfPokemon[$i])) == strtoupper(str_replace(' ','',$ability->Name)) ? 'selected' : '' }}>
                                             {{ $ability->Name }}
                                         </option>
                                     @endforeach
