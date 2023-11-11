@@ -4,6 +4,7 @@ use App\Http\Controllers\PokemonController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MetadataController;
 use App\Http\Controllers\ItemsController;
+use App\Http\Controllers\MapController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +30,5 @@ Route::get('/metadata', [MetadataController::class, 'index'])->name('metadata.in
 Route::get('/items', [ItemsController::class, 'index'])->name('items.index');
 Route::get('/pokemon', [PokemonController::class, 'index'])->name('pokemon.index');
 Route::get('/pokemon/{name}', [PokemonController::class, 'show'])->name('pokemon.show');
+
+Route::get('/map', [MapController::class, 'index'])->name('map.index');

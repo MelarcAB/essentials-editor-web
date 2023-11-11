@@ -32,6 +32,8 @@ class CreateSymlink extends Command
             'Trainers' => public_path('graphics/trainers'),
             'Items' => public_path('graphics/items'),
             'Pokemon' => public_path('graphics/pokemon'),
+            'Pictures' => public_path('graphics/pictures'),
+            //raiz
         ];
 
         foreach ($paths as $key => $linkPath) {
