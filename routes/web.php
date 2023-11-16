@@ -28,6 +28,7 @@ Route::get('/', function () {
 
 Route::get('/metadata', [MetadataController::class, 'index'])->name('metadata.index');
 Route::get('/items', [ItemsController::class, 'index'])->name('items.index');
+Route::get('/item/{IdName}', [ItemsController::class, 'show'])->name('items.show');
 Route::get('/pokemon', [PokemonController::class, 'index'])->name('pokemon.index');
 Route::get('/pokemon/{name}', [PokemonController::class, 'show'])->name('pokemon.show');
 

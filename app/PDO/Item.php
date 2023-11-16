@@ -16,6 +16,11 @@ class Item
     public $Type;
     public $Move;
     public $Flags;
+    public $PortionName;
+    public $PortionNamePlural;
+    public $BPPrice;
+    public $Consumable;
+    public $ShowQuantity;
 
     public function __construct(
         $Id = "",
@@ -23,13 +28,18 @@ class Item
         $Name = "",
         $NamePlural = "",
         $Pocket = "",
-        $Price =  "",
+        $Price = "",
         $Description = "",
         $FieldUse = "",
         $BattleUse = "",
         $Type = "",
         $Move = "",
-        $Flags = ""
+        $Flags = "",
+        $PortionName = "",
+        $PortionNamePlural = "",
+        $BPPrice = "",
+        $Consumable = "",
+        $ShowQuantity = ""
     ) {
         $this->Id = $Id;
         $this->Name = $Name;
@@ -43,10 +53,17 @@ class Item
         $this->Type = $Type;
         $this->Move = $Move;
         $this->Flags = $Flags;
+        $this->PortionName = $PortionName;
+        $this->PortionNamePlural = $PortionNamePlural;
+        $this->BPPrice = $BPPrice;
+        $this->Consumable = $Consumable;
+        $this->ShowQuantity = $ShowQuantity;
+
     }
 
 
-    public function getSprite(){
+    public function getSprite()
+    {
         return "/Graphics/Items/" . $this->IdName . ".png";
     }
 
@@ -61,7 +78,8 @@ class Item
 7 - Battle Items
 8 - Key Items
 */
-    public static function getPocketName($pocket_id){
+    public static function getPocketName($pocket_id)
+    {
         switch ($pocket_id) {
             case 1:
                 return "Items";
@@ -91,5 +109,18 @@ class Item
                 return "Items";
                 break;
         }
+    }
+
+    public static function getPockets(){
+        return [
+            1 => "Items",
+            2 => "Medicine",
+            3 => "Poké Balls",
+            4 => "TMs & HMs",
+            5 => "Berries",
+            6 => "Mail",
+            7 => "Battle Items",
+            8 => "Key Items"
+        ];
     }
 }

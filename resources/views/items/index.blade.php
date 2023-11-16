@@ -45,7 +45,7 @@ $items = $data;
                             </div>
                             
                             <!-- Botón de edición -->
-                            <button class="text-blue-500 text-sm hover:underline ml-2">Editar</button>
+                            <a href="{{route('items.show',["IdName"=>$item->IdName ])}}" class="text-blue-500 text-sm hover:underline ml-2">Editar</a>
                         </div>
                     @endforeach
                 </div>

@@ -14,4 +14,12 @@ class ItemsController extends Controller
 
         return view('items.index', compact('data'));
     }
+
+    public function show($IdName)
+    {
+        $items_obj = new Items();
+        $item =  $items_obj->searchItem($IdName);
+
+        return view('items.show', compact('item'));
+    }
 }

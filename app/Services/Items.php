@@ -21,44 +21,50 @@ class Items
 
         return $items;
     }
-    private function loadItems21() {
+    private function loadItems21()
+    {
         $items = [];
         $contents = File::get($this->path);
-        
+
         // Split by #-------------------------------
         $blocks = explode("#-------------------------------", $contents);
-        
+
         foreach ($blocks as $block) {
             $block = trim($block);
-            
+
             // Skip if block is empty
-            if(empty($block)) {
+            if (empty($block)) {
                 continue;
             }
-    
+
             // Get ID name (e.g., [MEGAHORN])
             if (!preg_match('/\[(.*?)\]/', $block, $matches)) {
                 continue;  // Skip this block if no ID is found
             }
             $idName = $matches[1];
-            
+
             // Split by new lines
             $lines = explode("\n", $block);
-    
+
             $attributes = [];
             foreach ($lines as $line) {
                 // Skip comments and empty lines
                 if (strpos($line, "#") === 0 || trim($line) == "") {
                     continue;
                 }
-           
+
                 // Check if the line contains " = " pattern and then split
                 if (strpos($line, " = ") !== false) {
                     list($key, $value) = explode(" = ", $line);
                     $attributes[$key] = $value;
                 }
             }
-    
+            //quitar el espacio o salto de linea que pueda haber en los campos de la array (\r y \n)
+            $attributes = array_map(function ($value) {
+                return trim($value);
+            }, $attributes);
+            
+
             // Constructing the Item
             $item = new Item(
                 '',  // Id is not provided in the new format
@@ -75,21 +81,21 @@ class Items
                 $attributes['Flags'] ?? ''
 
             );
-    
+
             $items[] = $item;
         }
-    
+
         // Regroup items by pocket
         $pockets = [];
         foreach ($items as $item) {
             $pocket_name = Item::getPocketName($item->Pocket);
             $pockets[$pocket_name][] = $item;
         }
-    
+
         return $pockets;
     }
-    
-    
+
+
 
     private function loadItems()
     {
@@ -143,6 +149,22 @@ class Items
         //printar los keys
 
         return $items;
+    }
+
+
+    public function searchItem($IdName)
+    {
+        $items = $this->loadData();
+        $item = null;
+        foreach ($items as $pockets) {
+
+            foreach ($pockets as $item) {
+                if ($item->IdName == $IdName) {
+                    return $item;
+                }
+            }
+        }
+        return $item;
     }
 
 
